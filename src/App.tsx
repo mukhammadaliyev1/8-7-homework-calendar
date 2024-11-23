@@ -119,19 +119,19 @@ const CalendarApp: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mt-[120px] mx-auto p-6 rounded-xl shadow-2xl font-sans bg-white">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800">{currentMonthYear}</h2>
-        <div className="space-x-4">
+    <div className="max-w-5xl mx-auto p-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl shadow-xl">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-4xl font-semibold text-white">{currentMonthYear}</h2>
+        <div className="space-x-6">
           <button
             onClick={goToPreviousMonth}
-            className="px-6 py-2 bg-blue-500 text-white rounded-md shadow-lg hover:bg-blue-400"
+            className="px-6 py-3 bg-white text-blue-600 rounded-full shadow-md hover:bg-gray-200 transition duration-300"
           >
             &lt;
           </button>
           <button
             onClick={goToNextMonth}
-            className="px-6 py-2 bg-blue-500 text-white rounded-md shadow-lg hover:bg-blue-400"
+            className="px-6 py-3 bg-white text-blue-600 rounded-full shadow-md hover:bg-gray-200 transition duration-300"
           >
             &gt;
           </button>
@@ -140,7 +140,7 @@ const CalendarApp: React.FC = () => {
 
       <div className="grid grid-cols-7 gap-4 text-center text-gray-800 font-medium">
         {weekDays.map((day) => (
-          <div key={day} className="text-lg">{day}</div>
+          <div key={day} className="text-lg text-gray-200">{day}</div>
         ))}
 
         {Array.from({ length: firstDayOfMonth }).map((_, index) => (
@@ -155,21 +155,18 @@ const CalendarApp: React.FC = () => {
             <div
               key={day}
               onClick={() => selectDay(day)}
-              className={`flex flex-col items-center justify-center cursor-pointer bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md transition-all duration-300 hover:bg-gray-200 ${
+              className={`flex flex-col items-center justify-center cursor-pointer bg-white text-blue-600 rounded-xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
                 isDaySelected(day)
-                  ? "bg-blue-500 text-white shadow-lg"
+                  ? "bg-blue-600 text-white"
                   : isCurrentDay(day)
-                  ? "bg-blue-400 text-black shadow-lg"
-                  : ""
+                  ? "bg-blue-400 text-white"
+                  : "hover:bg-gray-200"
               }`}
             >
-              <div className="font-semibold text-lg">{day}</div>
-              <div className="mt-2 space-y-1">
+              <div className="font-semibold text-xl">{day}</div>
+              <div className="mt-2 space-y-1 text-sm text-gray-700">
                 {dayEvents.map((event) => (
-                  <div
-                    key={event.id}
-                    className="text-sm text-gray-700 border-b px-2 py-1"
-                  >
+                  <div key={event.id} className="border-b py-1 text-gray-600">
                     {event.title}
                   </div>
                 ))}
@@ -181,22 +178,19 @@ const CalendarApp: React.FC = () => {
 
       <button
         onClick={() => setIsModalOpen(true)}
-        className="mt-8 px-6 py-3 bg-blue-600 text-white rounded-md shadow-lg hover:bg-blue-500"
+        className="mt-8 px-6 py-3 bg-white text-blue-600 rounded-full shadow-md hover:bg-gray-200 transition duration-300"
       >
         Add Event
       </button>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white shadow-2xl rounded-lg p-8 w-[400px]">
-            <h3 className="text-xl text-gray-800 font-semibold mb-6 text-center">
+            <h3 className="text-2xl text-gray-800 font-semibold mb-6 text-center">
               Add New Event
             </h3>
             <div className="mb-4">
-              <label
-                htmlFor="title"
-                className="block text-sm text-gray-800 font-medium"
-              >
+              <label htmlFor="title" className="block text-sm text-gray-800 font-medium">
                 Event Title
               </label>
               <input
@@ -204,14 +198,11 @@ const CalendarApp: React.FC = () => {
                 value={eventTitle}
                 onChange={(e) => setEventTitle(e.target.value)}
                 placeholder="New event"
-                className="text-black w-full p-3 mt-2 rounded-md border border-gray-300"
+                className="w-full p-3 mt-2 rounded-md border border-gray-300"
               />
             </div>
             <div className="mb-6">
-              <label
-                htmlFor="date"
-                className="block text-sm text-gray-800 font-medium"
-              >
+              <label htmlFor="date" className="block text-sm text-gray-800 font-medium">
                 Select Date
               </label>
               <input
@@ -221,19 +212,19 @@ const CalendarApp: React.FC = () => {
                 onChange={(e) => setSelectedDay(e.target.value)}
                 min="1970-01-01"
                 max="2200-01-01"
-                className="text-black w-full p-3 mt-2 rounded-md border border-gray-300"
+                className="w-full p-3 mt-2 rounded-md border border-gray-300"
               />
             </div>
             <div className="flex justify-between">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-500"
+                className="px-6 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-500 transition duration-300"
               >
                 Cancel
               </button>
               <button
                 onClick={addNewEvent}
-                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
+                className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-500 transition duration-300"
               >
                 Add Event
               </button>
@@ -241,7 +232,10 @@ const CalendarApp: React.FC = () => {
           </div>
         </div>
       )}
-      <p className="text-center mt-4 text-gray-800">Created by islamjnvc</p>
+
+      <p className="text-center mt-8 text-white text-sm">
+        Created by islamjnvc
+      </p>
     </div>
   );
 };
